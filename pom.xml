@@ -108,24 +108,39 @@
                         <version>3.5.0</version>
                         <executions>
                             <execution>
-                                <id>build-angular</id>
+                                <id>npm-install</id>
                                 <phase>generate-resources</phase>
                                 <goals>
                                     <goal>exec</goal>
                                 </goals>
+                                <configuration>
+                                    <executable>npm</executable>
+                                    <arguments>
+                                        <argument>install</argument>
+                                    </arguments>
+                                    <workingDirectory>${project.basedir}/src/frontend/web-todo</workingDirectory>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>build-angular</id>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>npm</executable>
+                                    <arguments>
+                                        <argument>run</argument>
+                                        <argument>build</argument>
+                                        <!--  Opcional: se o build do Angular precisar de um ambiente específico  -->
+                                        <argument>--</argument>
+                                        <argument>--configuration=production</argument>
+                                    </arguments>
+                                    <workingDirectory>${project.basedir}/src/frontend/web-todo</workingDirectory>
+                                </configuration>
                             </execution>
                         </executions>
-                        <configuration>
-                            <executable>npm</executable>
-                            <arguments>
-                                <argument>run</argument>
-                                <argument>build</argument>
-                                <!--  Opcional: se o build do Angular precisar de um ambiente específico  -->
-                                <argument>--</argument>
-                                <argument>--configuration=production</argument>
-                            </arguments>
-                            <workingDirectory>${project.basedir}/src/frontend/web-todo</workingDirectory>
-                        </configuration>
+
                     </plugin>
                     <!-- Copia os arquivos compilados do angular -->
                     <plugin>
